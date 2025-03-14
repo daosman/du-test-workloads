@@ -119,7 +119,7 @@ jobs:
         replicas: 6
         inputVars:
           Image_nginx: '{{ or .REGISTRY "quay.io/dosman" }}/sampleapp:aarch64'
-          Image_kubectl: '{{ or .REGISTRY "quay.io/dosman" }}/kubectl'
+          Image_kubectl: '{{ or .REGISTRY "quay.io/dosman" }}/kubectl:aarch64'
           volumes:
             - name: configmap-1
               type: configMap
