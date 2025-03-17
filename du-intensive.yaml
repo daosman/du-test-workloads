@@ -26,8 +26,8 @@ jobs:
       - objectTemplate: templates/guaranteed/deployment.yaml
         replicas: 1
         inputVars:
-          Image_stressng: '{{ or .REGISTRY "quay.io/rh_ee_apalanis" }}/fedora-stress-ng'
-          Image_nginx: '{{ or .REGISTRY "quay.io/rh_ee_apalanis" }}/sampleapp'
+          Image_stressng: '{{ or .REGISTRY "quay.io/dosman" }}/fedora-stress-ng:aarch64'
+          Image_nginx: '{{ or .REGISTRY "quay.io/dosman" }}/sampleapp:aarch64'
           volumes:
             - name: configmap-guaranteed-1
               type: configMap
@@ -60,8 +60,8 @@ jobs:
       - objectTemplate: templates/webserver/webserver-deployment.yaml
         replicas: 4
         inputVars:
-          Image_stressng: '{{ or .REGISTRY "quay.io/rh_ee_apalanis" }}/fedora-stress-ng'
-          Image_nginx: '{{ or .REGISTRY "quay.io/rh_ee_apalanis" }}/sampleapp'
+          Image_stressng: '{{ or .REGISTRY "quay.io/dosman" }}/fedora-stress-ng:aarch64'
+          Image_nginx: '{{ or .REGISTRY "quay.io/dosman" }}/sampleapp:aarch64'
           volumes:
             - name: configmap-1
               type: configMap
@@ -86,8 +86,8 @@ jobs:
       - objectTemplate: templates/webserver/curl-deployment.yaml
         replicas: 4
         inputVars:
-          Image_nginx: '{{ or .REGISTRY "quay.io/rh_ee_apalanis" }}/sampleapp'
-          Image_curl: '{{ or .REGISTRY "quay.io/rh_ee_apalanis" }}/curl'
+          Image_nginx: '{{ or .REGISTRY "quay.io/dosman" }}/sampleapp:aarch64'
+          Image_curl: '{{ or .REGISTRY "quay.io/dosman" }}/curl'
           volumes:
             - name: configmap-1
               type: configMap
@@ -118,8 +118,8 @@ jobs:
       - objectTemplate: templates/kubectlapp/deployment.yaml
         replicas: 6
         inputVars:
-          Image_nginx: '{{ or .REGISTRY "quay.io/rh_ee_apalanis" }}/sampleapp'
-          Image_kubectl: '{{ or .REGISTRY "quay.io/rh_ee_apalanis" }}/kubectl'
+          Image_nginx: '{{ or .REGISTRY "quay.io/dosman" }}/sampleapp:aarch64'
+          Image_kubectl: '{{ or .REGISTRY "quay.io/dosman" }}/kubectl:aarch64'
           volumes:
             - name: configmap-1
               type: configMap
@@ -139,23 +139,3 @@ jobs:
             - name: secret-4
               type: secret
               path: /var/secret4
-      # Template with ptp events consumer
-      - objectTemplate: templates/ptp-events-consumer/service-account.yaml
-        replicas: 1
-      - objectTemplate: templates/ptp-events-consumer/deployment.yaml
-        replicas: 1
-        inputVars:
-          Image_ptp_consumer: '{{ or .REGISTRY "quay.io/jenchen" }}/ptp-event-consumer'
-          short_node_name: '{{ (split "." .NODE_NAME)._0 }}'
-      - objectTemplate: templates/ptp-events-consumer/service.yaml
-        replicas: 1
-      # Template with storage stress on PVC claims
-      - objectTemplate: templates/storageio/pv.yaml
-        replicas: 1
-      - objectTemplate: templates/storageio/pvc.yaml
-        replicas: 1
-      - objectTemplate: templates/storageio/deployment.yaml
-        replicas: 1
-        inputVars:
-          Image_stressng: "{{ .REGISTRY }}/fedora-stress-ng"
-          Image_nginx: "{{ .REGISTRY }}/sampleapp"

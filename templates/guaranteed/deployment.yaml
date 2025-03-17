@@ -33,11 +33,11 @@ spec:
             requests:
               cpu: 31
               memory: 1024M
-              hugepages-1Gi: 16Gi
+              hugepages-512Mi: 16Gi
             limits:
               cpu: 31
               memory: 1024M
-              hugepages-1Gi: 16Gi
+              hugepages-512Mi: 16Gi
           env:
             - name: stress_cpu
               value: "31"
