@@ -37,6 +37,8 @@ spec:
           env:
             - name: stress_cpu
               value: "1"
+            - name: stress_timeout
+              value: "0"
       restartPolicy: Always
       volumes:
         {{ range  $volume := .volumes }}

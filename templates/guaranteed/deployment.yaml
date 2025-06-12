@@ -39,6 +39,8 @@ spec:
               memory: 1024M
               hugepages-512Mi: 16Gi
           env:
+            - name: stress_timeout
+              value: "0"
             - name: stress_cpu
               value: "31"
             - name: stress_vm
